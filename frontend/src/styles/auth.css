@@ -1,0 +1,125 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  border: 2px solid #bee3f8;
+  border-radius: 16px;
+  padding: 2rem 2.25rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.auth-card h1 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem;
+  color: #1a365d;
+  text-align: center;
+}
+
+.auth-card .auth-subtitle {
+  font-size: 1.2rem;
+  color: #4a5568;
+  text-align: center;
+  margin: 0 0 2rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c5282;
+}
+
+.form-group input {
+  font-size: 1.25rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid #bee3f8;
+  border-radius: 10px;
+  background: #f7fafc;
+  color: #2d3748;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+  border-color: #3182ce;
+  background: #ffffff;
+}
+
+.form-group input.input-error {
+  border-color: #e53e3e;
+}
+
+.field-error {
+  font-size: 1rem;
+  color: #c53030;
+  margin: 0;
+}
+
+.form-error {
+  font-size: 1.1rem;
+  color: #c53030;
+  background: #fff5f5;
+  border: 2px solid #feb2b2;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  margin: 0;
+  text-align: center;
+}
+
+.auth-button {
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 1rem;
+  border: none;
+  border-radius: 10px;
+  background: #3182ce;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.auth-button:hover:not(:disabled) {
+  background: #2b6cb0;
+}
+
+.auth-button:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+}
+
+.auth-link {
+  text-align: center;
+  font-size: 1.15rem;
+  color: #4a5568;
+  margin-top: 1.5rem;
+}
+
+.auth-link a {
+  color: #3182ce;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}

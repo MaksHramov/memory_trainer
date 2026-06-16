@@ -24,6 +24,35 @@
   margin: 0;
 }
 
+.tabs {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.tab {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.85rem 1.5rem;
+  border: 2px solid #bee3f8;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #2c5282;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.tab:hover {
+  background: #ebf8ff;
+}
+
+.tab.active {
+  background: #3182ce;
+  border-color: #2b6cb0;
+  color: #ffffff;
+}
+
 .main {
   flex: 1;
   display: flex;

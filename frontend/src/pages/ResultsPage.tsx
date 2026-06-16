@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { getTestResults, type TestResult } from '../api/tests'
+import { getTestTypeLabel } from '../utils/testLabels'
 import '../styles/results.css'
 
 function formatDate(iso: string): string {
@@ -64,7 +65,9 @@ export function ResultsPage() {
         {results.map((result) => (
           <li key={result.id} className="result-item">
             <div className="result-header">
-              <span className="result-title">{result.testTypeLabel}</span>
+              <span className="result-title">
+                {getTestTypeLabel(result.testType, result.testTypeLabel)}
+              </span>
               <span className="result-score">
                 {result.score} / {result.maxScore}
               </span>

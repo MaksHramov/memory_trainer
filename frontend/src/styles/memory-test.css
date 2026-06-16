@@ -1,0 +1,132 @@
+.memory-card h2 {
+  font-size: 1.6rem;
+  margin: 0 0 1.25rem;
+  color: #2c5282;
+  text-align: center;
+}
+
+.memory-text {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #2d3748;
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.timer {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2b6cb0;
+  text-align: center;
+  margin: 0 0 1.5rem;
+}
+
+.word-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.word-item {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: #1a365d;
+  background: #ebf8ff;
+  border: 2px solid #bee3f8;
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.choice-button {
+  font-size: 1.35rem;
+  padding: 1.1rem;
+  border: 2px solid #bee3f8;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #2c5282;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.choice-button:hover {
+  background: #ebf8ff;
+}
+
+.choice-button.selected {
+  background: #3182ce;
+  border-color: #2b6cb0;
+  color: #ffffff;
+}
+
+.memory-button {
+  display: block;
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 1rem;
+  border: 2px solid #bee3f8;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #2c5282;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.memory-button:hover {
+  background: #ebf8ff;
+}
+
+.memory-button.primary {
+  background: #3182ce;
+  border-color: #2b6cb0;
+  color: #ffffff;
+}
+
+.memory-button.primary:hover {
+  background: #2b6cb0;
+}
+
+.score-display {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #276749;
+  text-align: center;
+  margin: 0 0 1rem;
+}
+
+.save-status {
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0 0 1.5rem;
+  color: #4a5568;
+}
+
+.save-status.saved {
+  color: #276749;
+  font-weight: 600;
+}
+
+.save-status.error {
+  color: #c53030;
+}
+
+@media (max-width: 500px) {
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .word-item {
+    font-size: 1.6rem;
+  }
+}

@@ -1,48 +1,36 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { AppLayout } from './components/AppLayout'
+import { GuestRoute, ProtectedRoute } from './components/ProtectedRoute'
+import { AuthProvider } from './context/AuthContext'
+import { LoginPage } from './pages/LoginPage'
+import { AttentionTestPage } from './pages/AttentionTestPage'
+import { MemoryTestPage } from './pages/MemoryTestPage'
+import { RegisterPage } from './pages/RegisterPage'
+import { ResultsPage } from './pages/ResultsPage'
 
 function App() {
-  const [backendStatus, setBackendStatus] = useState<string>('проверка...')
-
-  useEffect(() => {
-    fetch(`${API_URL}/api/health`)
-      .then((res) => res.json())
-      .then((data) => setBackendStatus(data.status === 'ok' ? 'подключён' : 'ошибка'))
-      .catch(() => setBackendStatus('недоступен'))
-  }, [])
-
   return (
-    <div className="app">
-      <header className="header">
-        <h1>Тренажёр памяти</h1>
-        <p className="subtitle">
-          Упражнения для тренировки внимания и памяти
-        </p>
-      </header>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AppLayout />}>
+              <Route path="/" element={<Navigate to="/test" replace />} />
+              <Route path="/test" element={<MemoryTestPage />} />
+              <Route path="/attention" element={<AttentionTestPage />} />
+              <Route path="/results" element={<ResultsPage />} />
+            </Route>
+          </Route>
 
-      <main className="main">
-        <section className="card">
-          <h2>Добро пожаловать</h2>
-          <p>
-            Это приложение поможет поддерживать когнитивные навыки с помощью
-            простых и понятных упражнений.
-          </p>
-        </section>
+          <Route element={<GuestRoute />}>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Route>
 
-        <section className="card status-card">
-          <h2>Статус системы</h2>
-          <p>
-            Сервер: <span className="status">{backendStatus}</span>
-          </p>
-        </section>
-      </main>
-
-      <footer className="footer">
-        <p>Memory Trainer — забота о здоровье ума</p>
-      </footer>
-    </div>
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 

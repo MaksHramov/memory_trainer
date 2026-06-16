@@ -24,6 +24,36 @@
   margin: 0;
 }
 
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.tab {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.85rem 1.5rem;
+  border: 2px solid #bee3f8;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #2c5282;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.tab:hover {
+  background: #ebf8ff;
+}
+
+.tab.active {
+  background: #3182ce;
+  border-color: #2b6cb0;
+  color: #ffffff;
+}
+
 .main {
   flex: 1;
   display: flex;
@@ -55,6 +85,24 @@
 .status-card .status {
   font-weight: 700;
   color: #276749;
+}
+
+.logout-button {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.85rem 1.5rem;
+  border: 2px solid #bee3f8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #2c5282;
+  cursor: pointer;
+  align-self: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.logout-button:hover {
+  background: #ebf8ff;
+  border-color: #3182ce;
 }
 
 .footer {

@@ -14,7 +14,13 @@ export function AppLayout() {
 
       <nav className="tabs">
         <NavLink to="/test" className={({ isActive }) => (isActive ? 'tab active' : 'tab')}>
-          Тест на память
+          Память
+        </NavLink>
+        <NavLink
+          to="/attention"
+          className={({ isActive }) => (isActive ? 'tab active' : 'tab')}
+        >
+          Внимание
         </NavLink>
         <NavLink
           to="/results"

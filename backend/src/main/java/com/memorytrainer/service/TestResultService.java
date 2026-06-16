@@ -17,7 +17,8 @@ import java.util.Map;
 public class TestResultService {
 
     private static final Map<String, String> TEST_LABELS = Map.of(
-            "MEMORY_WORDS", "Запоминание слов"
+            "MEMORY_WORDS", "Запоминание слов",
+            "ATTENTION_ODD_ONE", "Тест на внимательность"
     );
 
     private final TestResultRepository testResultRepository;

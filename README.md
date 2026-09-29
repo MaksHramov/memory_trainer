@@ -64,11 +64,6 @@ React (View) → REST-контроллеры (Controller) → сервисы →
 - `backend/.../dto` — форматы запросов и ответов API;
 - `backend/.../config`, `security`, `exception` — настройки, проверка доступа и обработка ошибок.
 
-![Архитектура Memory Trainer](docs/architecture.svg)
-
-### Основные сценарии
-
-![Варианты использования Memory Trainer](docs/use-cases.svg)
 
 ---
 
@@ -184,4 +179,4 @@ npm run build
 5. Сервер связывает результат с учётной записью и сохраняет его в PostgreSQL.
 6. Пользователь просматривает историю в разделе «Результаты».
 
-Прежний развёрнутый текст требований сохранён в [архиве требований](docs/requirements-archive.md).
+

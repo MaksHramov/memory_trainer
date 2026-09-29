@@ -1,4 +1,4 @@
-# Memory Trainer — тренажёр памяти и внимания
+# Цифровой двойник тренажера когнитивных способностей для пожилых людей
 
 Веб-приложение с двумя короткими упражнениями, личной историей результатов и отдельной страницей администратора. Пользователь работает в браузере через React-интерфейс; сервер на Spring Boot сохраняет учётные записи и результаты в PostgreSQL.
 
@@ -63,7 +63,6 @@ React (View) → REST-контроллеры (Controller) → сервисы →
 - `backend/.../repository` — доступ к PostgreSQL через Spring Data JPA;
 - `backend/.../dto` — форматы запросов и ответов API;
 - `backend/.../config`, `security`, `exception` — настройки, проверка доступа и обработка ошибок.
-
 
 ---
 
@@ -179,4 +178,174 @@ npm run build
 5. Сервер связывает результат с учётной записью и сохраняет его в PostgreSQL.
 6. Пользователь просматривает историю в разделе «Результаты».
 
+Прежний развёрнутый текст требований сохранён в [архиве требований](docs/requirements-archive.md).
+
+---
+
+## 10. Диаграммы
+
+Диаграммы ниже записаны в формате Mermaid: их исходный текст можно менять прямо в README. Архитектура «Каналы и фильтры» к этому проекту не относится, поэтому вместо неё показана фактическая клиент-серверная структура с разделением MVC.
+
+### Контекстная диаграмма
+
+```mermaid
+flowchart LR
+    User[Пользователь] -->|Проходит упражнения и смотрит историю| App[Memory Trainer]
+    Admin[Администратор] -->|Управляет пользователями и результатами| App
+    App <-->|Хранит учётные записи и результаты| DB[(PostgreSQL)]
+```
+
+### Use Case диаграмма
+
+```mermaid
+flowchart TB
+    User[Пользователь]
+    Admin[Администратор]
+    subgraph App[Memory Trainer]
+        Register([Регистрация])
+        Login([Вход])
+        Memory([Тест на запоминание слов])
+        Attention([Тест на внимание])
+        OwnResults([Просмотр своих результатов])
+        AdminLogin([Вход в админку])
+        Users([Просмотр и изменение пользователей])
+        Results([Просмотр и изменение результатов])
+    end
+    User --- Register
+    User --- Login
+    User --- Memory
+    User --- Attention
+    User --- OwnResults
+    Admin --- AdminLogin
+    Admin --- Users
+    Admin --- Results
+```
+
+### Архитектура клиент-серверного приложения (MVC)
+
+```mermaid
+flowchart LR
+    subgraph View[View — React]
+        Pages[Страницы и упражнения] --> ApiClient[API-клиент]
+    end
+    subgraph Backend[Spring Boot]
+        Jwt[JWT-фильтр] --> Controller[REST-контроллеры]
+        Controller --> Service[Сервисы]
+        Service --> Repository[Репозитории]
+        Service --> Models[Модели User и TestResult]
+    end
+    ApiClient -->|HTTP / JSON / JWT| Jwt
+    Repository --> Database[(PostgreSQL)]
+```
+
+### Диаграмма последовательности — сохранение результата упражнения
+
+```mermaid
+sequenceDiagram
+    actor User as Пользователь
+    participant React as React-клиент
+    participant Controller as TestResultController
+    participant Service as TestResultService
+    participant Users as UserRepository
+    participant Results as TestResultRepository
+    participant DB as PostgreSQL
+    User->>React: Завершает упражнение
+    React->>React: Подсчитывает баллы
+    React->>Controller: POST /api/tests/results + JWT
+    Controller->>Service: saveResult(username, request)
+    Service->>Users: findByUsername(username)
+    Users->>DB: Найти пользователя
+    DB-->>Users: User
+    Users-->>Service: User
+    Service->>Results: save(TestResult)
+    Results->>DB: Сохранить результат
+    DB-->>Results: Сохранённая запись
+    Results-->>Service: TestResult
+    Service-->>Controller: TestResultResponse
+    Controller-->>React: HTTP 201 + JSON
+    React-->>User: Показывает результат
+```
+
+### Диаграмма пакетов
+
+```mermaid
+flowchart LR
+    subgraph Frontend[frontend/src]
+        Pages[pages] --> API[api]
+        Pages --> Utils[utils]
+    end
+    subgraph Backend[backend/com.memorytrainer]
+        Controllers[controller] --> Services[service]
+        Controllers --> DTO[dto]
+        Services --> Repositories[repository]
+        Services --> Models[models]
+        Repositories --> Models
+        Security[security] --> Services
+        Config[config] --> Security
+        Exceptions[exception] --> DTO
+    end
+    API -->|REST / JSON| Controllers
+```
+
+### Диаграмма классов
+
+```mermaid
+classDiagram
+    class User {
+        +Long id
+        +String username
+        +String password
+        +Role role
+        +Instant createdAt
+    }
+    class TestResult {
+        +Long id
+        +User user
+        +String testType
+        +int score
+        +int maxScore
+        +Instant completedAt
+    }
+    class AuthController
+    class TestResultController
+    class AdminController
+    class AuthService
+    class TestResultService
+    class AdminService
+    class UserRepository
+    class TestResultRepository
+    User "1" --> "0..*" TestResult : имеет
+    AuthController --> AuthService
+    TestResultController --> TestResultService
+    AdminController --> AdminService
+    AuthService --> UserRepository
+    TestResultService --> UserRepository
+    TestResultService --> TestResultRepository
+    AdminService --> UserRepository
+    AdminService --> TestResultRepository
+    UserRepository --> User
+    TestResultRepository --> TestResult
+```
+
+### ER-диаграмма базы данных
+
+```mermaid
+erDiagram
+    users ||--o{ test_results : has
+    users {
+        bigint id PK
+        varchar username UK
+        varchar password
+        varchar role
+        timestamp created_at
+    }
+    test_results {
+        bigint id PK
+        bigint user_id FK
+        varchar test_type
+        integer score
+        integer max_score
+        timestamp completed_at
+    }
+```
 
